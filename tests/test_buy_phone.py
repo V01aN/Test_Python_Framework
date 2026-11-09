@@ -38,8 +38,6 @@ def test_buy_phone(phones_catalog_page: PhonesCatalogPage):
     phones_catalog_page.enter_price_filter(first_price, second_price)
 
     phones_catalog_page.enter_screen_size_filter(first_screen, second_screen)
-    #phones_catalog_page.choose_minimum_screen_size_filter('2.8"')
-    #phones_catalog_page.choose_maximum_screen_size_filter('10i')
 
     phones_catalog_page.assert_selected_phone_still_marked(first_name)
     phones_catalog_page.assert_selected_phone_still_marked(second_name)
