@@ -109,12 +109,17 @@ class PhonesCatalogPage:
     @allure.step('Проверить наличие флага сравнение у телефона №{num}')
     def assert_comparison_flag_set(self, num: int):
         expect(self.phone_cart_by_num(num)
-               .locator(self.delete_from_comparison_button)).to_be_visible()
+               .locator(self.delete_from_comparison_button),
+               f'У телефона №{num} не установлен флаг сравнения').to_be_visible()
 
     @allure.step('Проверить наличие кнопки перехода в сравнение')
     def assert_compare_button_is_visible(self):
-        expect(self.compare_button).to_be_visible()
+        expect(self.compare_button,
+               f'Отсутвует кнопка перехода на страницу сравнения').to_be_visible()
 
-    @allure.step('Проверить, что {name} все ещё отображется после фильтрации')
+    @allure.step('Проверить, что {name} все ещё отображется')
     def assert_selected_phone_still_marked(self, name: str):
-        expect(self.phone_cart.filter(has=self.delete_from_comparison_button).filter(has_text=name)).to_be_visible()
+        expect(self.phone_cart.
+               filter(has=self.delete_from_comparison_button).
+               filter(has_text=name),
+               f'Телефон {name} не отображается после филтрации').to_be_visible()

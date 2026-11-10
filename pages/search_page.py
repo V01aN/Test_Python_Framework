@@ -25,4 +25,5 @@ class SearchPage:
 
     @allure.step('Проверить что результат поиска с текстом {content} отображается')
     def assert_search_result(self, content: str):
-        expect(self.result_with_text(content)).to_be_visible(timeout=20_000)
+        expect(self.result_with_text(content),
+               f'В результатах поиска отсутствует искомый текст: {content}').to_be_visible(timeout=20_000)

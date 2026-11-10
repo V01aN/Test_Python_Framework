@@ -36,23 +36,41 @@ class ComparisonPage:
 
     @allure.step('Проверить, что в сравнении находятся разные телефоны')
     def assert_there_are_different_phones(self):
-        assert self.get_phone_name_by_num(1) != self.get_phone_name_by_num(2)
+        assert self.get_phone_name_by_num(1) != self.get_phone_name_by_num(2), (
+            f'В сравнении находятся два одинаковых телефона {self.get_phone_name_by_num(1)}'
+        )
 
     @allure.step('Сверить ОС {os} с отображаемым текстом')
     def assert_phone_os(self, os: str, num: int):
-        assert self.get_table_row_content_by_num('Операционная система', num) == os
+        assert self.get_table_row_content_by_num('Операционная система', num) == os, (
+            f'ОС страницы каталога не совпадает со страницей сравнений:'
+            f'\nКаталог: {os}'
+            f'\nСтраница сравнения: {self.get_table_row_content_by_num('Операционная система', num)}'
+        )
 
     @allure.step('Сверить размер экрана {diagonal} с отображаемым текстом')
     def assert_phone_diagonal(self, diagonal: str, num: int):
-        assert self.get_table_row_content_by_num('Размер экрана', num) == diagonal
+        assert self.get_table_row_content_by_num('Размер экрана', num) == diagonal, (
+            f'Размер экрана страницы каталога не совпадает со страницей сравнений:'
+            f'\nКаталог: {diagonal}'
+            f'\nСтраница сравнения: {self.get_table_row_content_by_num('Размер экрана', num)}'
+        )
 
     @allure.step('Сверить разрешение экрана {resolution} с отображаемым текстом')
     def assert_phone_resolution(self, resolution: str, num: int):
-        assert self.get_table_row_content_by_num('Разрешение экрана', num) == resolution
+        assert self.get_table_row_content_by_num('Разрешение экрана', num) == resolution, (
+            f'Разрешение экрана страницы каталога не совпадает со страницей сравнений:'
+            f'\nКаталог: {resolution}'
+            f'\nСтраница сравнения: {self.get_table_row_content_by_num('Разрешение экрана', num)}'
+        )
 
     @allure.step('Сверить объем ОЗУ {ram} с отображаемым текстом')
     def assert_phone_ram(self, ram: str, num: int):
-        assert self.get_table_row_content_by_num('Объем оперативной памяти', num) == ram
+        assert self.get_table_row_content_by_num('Объем оперативной памяти', num) == ram, (
+            f'Объем ОЗУ страницы каталога не совпадает со страницей сравнений:'
+            f'\nКаталог: {ram}'
+            f'\nСтраница сравнения: {self.get_table_row_content_by_num('Объем оперативной памяти', num)}'
+        )
 
     @allure.step('Сверить параметры спецификации из каталога с отображаемым текстом телефона №{num}')
     def assert_specs_against_catalog(self, phone_specs: PhoneSpecs, num: int):

@@ -48,6 +48,7 @@ def test_buy_phone(phones_catalog_page: PhonesCatalogPage):
 
     comparison_page = phone_page.open_comparison_page()
     comparison_page.assert_there_are_different_phones()
+
     comparison_page.assert_specs_against_catalog(first_spec, 2)
     comparison_page.assert_specs_against_catalog(second_spec, 1)
 
@@ -56,3 +57,4 @@ def test_buy_phone(phones_catalog_page: PhonesCatalogPage):
     phone_page.add_product_to_cart()
     cart_page = phone_page.go_to_cart()
     cart_page.assert_cart_has_product_name(first_name)
+    cart_page.clear_cart()

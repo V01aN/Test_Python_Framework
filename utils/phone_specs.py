@@ -1,5 +1,5 @@
-import re
 from dataclasses import dataclass
+
 
 @dataclass
 class PhoneSpecs:
@@ -10,7 +10,8 @@ class PhoneSpecs:
 
     @property
     def diagonal_str(self) -> str:
-        return f"{self.diagonal:.1f}\""
+        from utils.parser import format_screen_size
+        return format_screen_size(self.diagonal)
 
     @property
     def ram_str(self) -> str:

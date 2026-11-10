@@ -1,5 +1,6 @@
 from typing import Any, Generator
 
+import allure
 import pytest
 from playwright.sync_api import Page
 from pages.main_page import MainPage
@@ -31,6 +32,27 @@ def browser_context_args(browser_context_args):
         "viewport": {"width": 1600, "height": 900},
     }
 
+@pytest.hookimpl(tryfirst=True, hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    outcome = yield
+    rep = outcome.get_result()
+    if rep.when == "call" and rep.failed:
+        page = item.funcargs.get("page")
+        if page is not None:
+            try:
+                allure.attach(
+                    page.screenshot(full_page=True),
+                    name="screenshot_on_failure",
+                    attachment_type=allure.attachment_type.PNG,
+                )
+                allure.attach(
+                    page.content(),
+                    name="page.html",
+                    attachment_type=allure.attachment_type.HTML,
+                )
+            except Exception:
+                pass
+
 @pytest.fixture
 def page(context) -> Generator[Page, Any, None]:
     page: Page = context.new_page()
@@ -43,7 +65,8 @@ def page(context) -> Generator[Page, Any, None]:
 def logged_in_page(page: Page) -> Page:
     page.goto(get_base_url())
     page.locator('#submit-button').filter(has_text='Принять все cookie').click()
-    #MainPage(page).open_login_page()
-    #LoginPage(page).choose_email_nick_auth()
-    #LoginPage(page).login_as(get_login(), get_password())
+    page.wait_for_load_state('networkidle')
+    MainPage(page).open_login_page()
+    LoginPage(page).choose_email_nick_auth()
+    LoginPage(page).login_as(get_login(), get_password())
     return page

@@ -30,19 +30,23 @@ class PhonePage:
 
     @allure.step('Найти ОС {os} в отображаемой спецификации')
     def assert_phone_os(self, os: str):
-        expect(self.phone_spec).to_contain_text(os)
+        expect(self.phone_spec,
+               f'Искомая ОС {os} не найдена в спецификации').to_contain_text(os)
 
     @allure.step('Найти диагональ {diagonal} в отображаемой спецификации')
     def assert_phone_diagonal(self, diagonal: str):
-        expect(self.phone_spec).to_contain_text(diagonal)
+        expect(self.phone_spec,
+               f'Искомая диагонал {diagonal} не найдена в спецификации').to_contain_text(diagonal)
 
     @allure.step('Найти разрешение {resolution} в отображаемой спецификации')
     def assert_phone_resolution(self, resolution: str):
-        expect(self.phone_spec).to_contain_text(resolution)
+        expect(self.phone_spec,
+               f'Искомое разрешение {resolution} не найдено в спецификации').to_contain_text(resolution)
 
     @allure.step('Найти объем ОЗУ {ram} в отображаемой спецификации')
     def assert_phone_ram(self, ram: str):
-        expect(self.phone_spec).to_contain_text(ram)
+        expect(self.phone_spec,
+               f'Искомый объем ОЗУ {ram} не найден в спецификации').to_contain_text(ram)
 
     @allure.step('Проверить наличие параметров спецификации из каталога на странице телефона')
     def assert_specs_against_catalog(self, catalog_spec: PhoneSpecs):
